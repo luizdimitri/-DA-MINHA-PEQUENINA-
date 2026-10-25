@@ -156,7 +156,7 @@
     <section id="screen-letter" class="hidden relative z-10 w-full min-h-screen flex flex-col items-center justify-start px-4 sm:px-6 py-12 transition-all duration-1000 opacity-0">
         <div class="max-w-2xl w-full mx-auto flex flex-col items-center">
             
-            <!-- Box da Música Spotify -->
+            <!-- Box da Música Spotify com o link novo -->
             <div class="w-full bg-cardBg/90 border border-pink-500/30 p-6 rounded-3xl romantic-glow mb-8 text-center shadow-xl">
                 <h3 class="text-lg font-bold text-pink-300 mb-3 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-music text-romanticPink animate-bounce"></i> ESCUTE ESSA MUSICA E LEIA AMOR
@@ -168,7 +168,8 @@
 
                 <div id="music-container" class="hidden mt-4 transition-all duration-500">
                     <div class="rounded-xl overflow-hidden border border-pink-500/20 shadow-lg bg-black">
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1u6x0D8jVjWbT8E5Qv6s7z?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                        <!-- Spotify iframe atualizado com o ID da sua música (5U28PY9MekLyCBYtLHGQpe) -->
+                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/5U28PY9MekLyCBYtLHGQpe?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                     </div>
                 </div>
             </div>
@@ -313,7 +314,6 @@
 
             const totalMonths = (years * 12) + months;
 
-            // Atualiza caso a data seja calculada ou fixa os valores desejados
             if (totalMonths >= 0) {
                 document.getElementById('months-count').innerText = totalMonths;
                 document.getElementById('days-count').innerText = days;
@@ -469,12 +469,10 @@
 
             arena.appendChild(item);
 
-            // Animação de subir (voar)
             setTimeout(() => {
                 item.style.top = '-50px';
             }, 50);
 
-            // Remover item quando sair da tela
             setTimeout(() => {
                 if (item.parentElement) {
                     item.remove();
