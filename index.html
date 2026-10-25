@@ -152,24 +152,25 @@
         </div>
     </section>
 
-    <!-- SEÇÃO 3: MÚSICA & CARTA -->
+    <!-- SEÇÃO 3: MÚSICA YOUTUBE & CARTA -->
     <section id="screen-letter" class="hidden relative z-10 w-full min-h-screen flex flex-col items-center justify-start px-4 sm:px-6 py-12 transition-all duration-1000 opacity-0">
         <div class="max-w-2xl w-full mx-auto flex flex-col items-center">
             
-            <!-- Box da Música Spotify com o link novo -->
+            <!-- Box da Música em estilo Player do YouTube -->
             <div class="w-full bg-cardBg/90 border border-pink-500/30 p-6 rounded-3xl romantic-glow mb-8 text-center shadow-xl">
-                <h3 class="text-lg font-bold text-pink-300 mb-3 flex items-center justify-center gap-2">
+                <h3 class="text-lg font-bold text-pink-300 mb-1 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-music text-romanticPink animate-bounce"></i> ESCUTE ESSA MUSICA E LEIA AMOR
                 </h3>
+                <p class="text-xs text-pink-400 font-medium mb-4">🎵 Tocando: Melim - Meu Abrigo</p>
                 
                 <button id="btn-reveal-music" onclick="toggleMusic()" class="bg-romanticPink/20 hover:bg-romanticPink/30 border border-romanticPink text-pink-200 px-6 py-3 rounded-xl font-medium transition-all text-sm flex items-center justify-center gap-2 mx-auto cursor-pointer">
                     <i class="fa-solid fa-play text-romanticPink"></i> Revelar a Música ("Meu Abrigo" - Melim)
                 </button>
 
+                <!-- Player Player estilo YouTube Embed -->
                 <div id="music-container" class="hidden mt-4 transition-all duration-500">
                     <div class="rounded-xl overflow-hidden border border-pink-500/20 shadow-lg bg-black">
-                        <!-- Spotify iframe atualizado com o ID da sua música (5U28PY9MekLyCBYtLHGQpe) -->
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/5U28PY9MekLyCBYtLHGQpe?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                        <iframe id="yt-player" width="100%" height="200" src="https://www.youtube.com/embed/vY-AmJM0fu8?enablejsapi=1" title="Melim - Meu Abrigo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
@@ -367,16 +368,22 @@
             }, 500);
         }
 
-        // --- REVELAR MÚSICA DO SPOTIFY ---
+        // --- REVELAR MÚSICA DO YOUTUBE ---
         function toggleMusic() {
             const container = document.getElementById('music-container');
             const btn = document.getElementById('btn-reveal-music');
+            const iframe = document.getElementById('yt-player');
+
             if (container.classList.contains('hidden')) {
                 container.classList.remove('hidden');
                 btn.innerHTML = '<i class="fa-solid fa-pause text-romanticPink"></i> Ocultar Música';
+                // Toca a música automaticamente no YouTube
+                iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
             } else {
                 container.classList.add('hidden');
                 btn.innerHTML = '<i class="fa-solid fa-play text-romanticPink"></i> Revelar a Música ("Meu Abrigo" - Melim)';
+                // Pausa a música
+                iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
             }
         }
 
