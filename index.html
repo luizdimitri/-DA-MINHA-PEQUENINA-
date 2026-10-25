@@ -23,7 +23,6 @@
                     },
                     animation: {
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'bounce-slow': 'bounce 2s infinite',
                     }
                 }
             }
@@ -46,17 +45,14 @@
         .romantic-glow-lg {
             box-shadow: 0 0 40px rgba(255, 42, 133, 0.8);
         }
-        .text-glow {
-            text-shadow: 0 0 10px rgba(255, 42, 133, 0.5);
-        }
-        /* Corações caindo na capa */
+        /* Corações caindo no fundo de todo o site */
         .falling-heart {
-            position: absolute;
+            position: fixed;
             top: -10vh;
             color: #ff2a85;
             font-size: 1.5rem;
             animation: fall linear forwards;
-            z-index: 10;
+            z-index: 0;
             pointer-events: none;
             opacity: 0.8;
         }
@@ -83,38 +79,39 @@
         }
     </style>
 </head>
-<body class="bg-black min-h-screen text-white relative selection:bg-romanticPink selection:text-white">
+<body class="bg-black min-h-screen text-white relative selection:bg-romanticPink selection:text-white flex flex-col justify-center items-center">
 
-    <!-- CANVAS PARA FUNDO DE CORAÇÕES NA CAPA -->
-    <div id="hearts-container" class="absolute inset-0 overflow-hidden pointer-events-none z-0"></div>
+    <!-- CONTAINER DE CORAÇÕES CAINDO NO FUNDO -->
+    <div id="hearts-container" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
 
-    <!-- SEÇÃO 1: CAPA (TELA INICIAL) -->
-    <section id="screen-cover" class="relative z-10 min-h-screen flex flex-col items-center justify-between px-6 py-12 text-center transition-opacity duration-1000">
+    <!-- SEÇÃO 1: TELA DE CAPA -->
+    <section id="screen-cover" class="relative z-10 w-full min-h-screen flex flex-col items-center justify-between px-6 py-12 text-center transition-opacity duration-1000">
         <div class="flex-1 flex flex-col items-center justify-center max-w-lg mx-auto">
+            <!-- Coração Neon Central -->
             <div class="w-20 h-20 rounded-full bg-romanticPink/20 flex items-center justify-center mb-8 romantic-glow animate-pulse-slow">
                 <i class="fa-solid fa-heart text-4xl text-romanticPink"></i>
             </div>
             
-            <!-- Efeito de máquina de escrever -->
-            <h1 id="typing-text" class="text-2xl sm:text-3xl font-medium leading-relaxed tracking-wide min-h-[120px] text-gray-100">
-                <!-- Preenchido via JS -->
+            <!-- Frase Inicial -->
+            <h1 class="text-2xl sm:text-3xl font-medium leading-relaxed tracking-wide text-gray-100">
+                oiii amor, sei que você anda triste<br>e cansada, então fiz isso para<br>você
             </h1>
         </div>
 
-        <!-- Seta com círculo neon rosa -->
+        <!-- Seta Rosa Glow -->
         <div class="mt-8 pb-6">
-            <button onclick="goToStage2()" class="group relative p-4 focus:outline-none cursor-pointer transform transition hover:scale-110 active:scale-95" aria-label="Avançar para a contagem">
+            <button onclick="goToStage2()" class="group relative p-4 focus:outline-none cursor-pointer transform transition hover:scale-110 active:scale-95" aria-label="Avançar">
                 <div class="absolute inset-0 rounded-full border-2 border-romanticPink romantic-glow animate-ping opacity-75"></div>
                 <div class="absolute inset-0 rounded-full border-2 border-romanticPink romantic-glow"></div>
-                <div class="relative w-14 h-14 rounded-full bg-gradient-to-r from-romanticPink to-pink-600 flex items-center justify-center text-white shadow-lg">
+                <div class="relative w-14 h-14 rounded-full bg-romanticPink flex items-center justify-center text-white shadow-lg">
                     <i class="fa-solid fa-arrow-down text-xl animate-bounce"></i>
                 </div>
             </button>
         </div>
     </section>
 
-    <!-- SEÇÃO 2: CONTAGEM DO RELACIONAMENTO -->
-    <section id="screen-countdown" class="hidden relative z-10 min-h-screen flex flex-col items-center justify-between px-6 py-12 text-center transition-all duration-1000 opacity-0 translate-y-10">
+    <!-- SEÇÃO 2: CONTAGEM DE TEMPO DE RELACIONAMENTO -->
+    <section id="screen-countdown" class="hidden relative z-10 w-full min-h-screen flex flex-col items-center justify-between px-6 py-12 text-center transition-all duration-1000 opacity-0 translate-y-10">
         <div class="flex-1 flex flex-col items-center justify-center max-w-xl mx-auto w-full">
             <div class="bg-cardBg/80 backdrop-blur-md border border-romanticPink/30 p-8 rounded-3xl romantic-glow w-full max-w-md shadow-2xl">
                 <div class="inline-block p-3 bg-romanticPink/10 rounded-2xl mb-4 text-romanticPink">
@@ -124,15 +121,15 @@
                 <h2 class="text-xl sm:text-2xl font-semibold mb-2 text-gray-200">juntos desde 16 de março de 2026</h2>
                 <div class="h-1 w-20 bg-romanticPink mx-auto rounded-full mb-6"></div>
 
-                <!-- Box de Contagem de Meses e Dias -->
+                <!-- Box de Meses e Dias -->
                 <div id="time-counter" class="grid grid-cols-2 gap-4 my-6">
                     <div class="bg-black/50 p-4 rounded-2xl border border-pink-500/20">
-                        <span id="months-count" class="block text-4xl sm:text-5xl font-bold text-romanticPink">0</span>
-                        <span class="text-xs sm:text-sm text-gray-400 uppercase tracking-widest mt-1 block">Meses</span>
+                        <span id="months-count" class="block text-4xl sm:text-5xl font-bold text-romanticPink">7</span>
+                        <span class="text-xs sm:text-sm text-gray-400 uppercase tracking-widest mt-1 block">MESES</span>
                     </div>
                     <div class="bg-black/50 p-4 rounded-2xl border border-pink-500/20">
-                        <span id="days-count" class="block text-4xl sm:text-5xl font-bold text-romanticPink">0</span>
-                        <span class="text-xs sm:text-sm text-gray-400 uppercase tracking-widest mt-1 block">Dias</span>
+                        <span id="days-count" class="block text-4xl sm:text-5xl font-bold text-romanticPink">9</span>
+                        <span class="text-xs sm:text-sm text-gray-400 uppercase tracking-widest mt-1 block">DIAS</span>
                     </div>
                 </div>
 
@@ -140,13 +137,13 @@
             </div>
         </div>
 
-        <!-- Segunda Seta e Gatilho para a Carta -->
+        <!-- Botão para Ir Para a Carta -->
         <div class="mt-8 pb-6 flex flex-col items-center max-w-md w-full mx-auto">
             <p class="text-sm sm:text-base font-medium text-pink-200 mb-4 px-4 text-center leading-relaxed">
                 amor preparei pra você com todo meu amor e carinho e te amo muito gata.
             </p>
             
-            <button onclick="goToStage3()" class="w-full bg-gradient-to-r from-romanticPink to-pink-700 hover:from-pink-600 hover:to-pink-800 text-white font-semibold py-4 px-6 rounded-2xl romantic-glow transition-all transform hover:scale-[1.02] active:scale-98 flex flex-col items-center justify-center gap-2 group cursor-pointer shadow-xl">
+            <button onclick="goToStage3()" class="w-full bg-romanticPink hover:bg-pink-600 text-white font-semibold py-4 px-6 rounded-2xl romantic-glow transition-all transform hover:scale-[1.02] active:scale-98 flex flex-col items-center justify-center gap-2 group cursor-pointer shadow-xl">
                 <span class="text-xs sm:text-sm tracking-wide uppercase text-pink-100 font-bold">CLICA AQUI EM BAIXO E LEIA UMA SIMPLES CARTA PARA VOCÊ</span>
                 <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white mt-1 group-hover:translate-y-1 transition-transform">
                     <i class="fa-solid fa-arrow-down text-lg"></i>
@@ -155,11 +152,11 @@
         </div>
     </section>
 
-    <!-- SEÇÃO 3: CARTA DE AMOR & MÚSICA -->
-    <section id="screen-letter" class="hidden relative z-10 min-h-screen flex flex-col items-center justify-start px-4 sm:px-6 py-12 transition-all duration-1000 opacity-0">
+    <!-- SEÇÃO 3: MÚSICA & CARTA -->
+    <section id="screen-letter" class="hidden relative z-10 w-full min-h-screen flex flex-col items-center justify-start px-4 sm:px-6 py-12 transition-all duration-1000 opacity-0">
         <div class="max-w-2xl w-full mx-auto flex flex-col items-center">
             
-            <!-- Aviso da Música -->
+            <!-- Box da Música Spotify -->
             <div class="w-full bg-cardBg/90 border border-pink-500/30 p-6 rounded-3xl romantic-glow mb-8 text-center shadow-xl">
                 <h3 class="text-lg font-bold text-pink-300 mb-3 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-music text-romanticPink animate-bounce"></i> ESCUTE ESSA MUSICA E LEIA AMOR
@@ -169,7 +166,6 @@
                     <i class="fa-solid fa-play text-romanticPink"></i> Revelar a Música ("Meu Abrigo" - Melim)
                 </button>
 
-                <!-- Player Spotify Embed -->
                 <div id="music-container" class="hidden mt-4 transition-all duration-500">
                     <div class="rounded-xl overflow-hidden border border-pink-500/20 shadow-lg bg-black">
                         <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1u6x0D8jVjWbT8E5Qv6s7z?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
@@ -177,10 +173,10 @@
                 </div>
             </div>
 
-            <!-- Envelope / Carta com Coração -->
+            <!-- Envelope / Carta -->
             <div id="envelope-wrapper" class="w-full bg-cardBg border border-romanticPink/40 p-6 sm:p-10 rounded-3xl romantic-glow-lg relative shadow-2xl transition-all duration-700">
                 
-                <!-- Estado Fechado da Carta -->
+                <!-- Estado Fechado: Toque no Coração -->
                 <div id="envelope-closed" class="py-12 flex flex-col items-center justify-center text-center cursor-pointer group" onclick="openLetter()">
                     <div class="w-28 h-28 rounded-full bg-romanticPink/20 flex items-center justify-center mb-6 romantic-glow group-hover:scale-110 transition-transform animate-pulse">
                         <i class="fa-solid fa-heart text-6xl text-romanticPink"></i>
@@ -204,7 +200,7 @@
                         <span class="text-2xl text-romanticPink font-script">Sempre juntos</span>
                     </div>
 
-                    <!-- Texto da Carta -->
+                    <!-- Mensagem Carinhosa -->
                     <div class="space-y-4 text-gray-200 text-base sm:text-lg leading-relaxed font-light text-left">
                         <p class="font-semibold text-pink-200">Meu amor,</p>
                         
@@ -217,9 +213,9 @@
                         <p>Respire fundo, descanse esse coraçãozinho lindo e saiba que o meu amor por você é incondicional, gigante e eterno. Estou lutando com você e por nós, sempre. Te amo mais do que as palavras podem expressar, minha gata linda. Vamos passar por cima de qualquer tempestade juntos! ❤️</p>
                     </div>
 
-                    <!-- Botão para ir para o Mini-game -->
+                    <!-- Botão para o Jogo -->
                     <div class="mt-10 pt-6 border-t border-pink-500/20 text-center">
-                        <button onclick="goToStage4()" class="w-full sm:w-auto bg-gradient-to-r from-romanticPink to-pink-700 hover:from-pink-600 hover:to-pink-800 text-white font-semibold py-4 px-8 rounded-2xl romantic-glow transition-all transform hover:scale-105 active:scale-95 shadow-xl cursor-pointer inline-flex items-center justify-center gap-3">
+                        <button onclick="goToStage4()" class="w-full sm:w-auto bg-romanticPink hover:bg-pink-600 text-white font-semibold py-4 px-8 rounded-2xl romantic-glow transition-all transform hover:scale-105 active:scale-95 shadow-xl cursor-pointer inline-flex items-center justify-center gap-3">
                             <span>Agora vamos jogar um pouquinho para distrair a mente? ❤️</span>
                             <i class="fa-solid fa-gamepad text-xl"></i>
                         </button>
@@ -230,16 +226,16 @@
         </div>
     </section>
 
-    <!-- SEÇÃO 4: O JOGO / MINI-GAME -->
-    <section id="screen-game" class="hidden relative z-10 min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-12 transition-all duration-1000 opacity-0">
+    <!-- SEÇÃO 4: MINI-GAME DOS CORAÇÕES VOANDO -->
+    <section id="screen-game" class="hidden relative z-10 w-full min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-12 transition-all duration-1000 opacity-0">
         <div class="max-w-xl w-full mx-auto bg-cardBg border border-romanticPink/40 p-6 sm:p-8 rounded-3xl romantic-glow text-center shadow-2xl">
             <div class="inline-block p-3 bg-romanticPink/20 rounded-2xl mb-3 text-romanticPink">
                 <i class="fa-solid fa-gamepad text-3xl"></i>
             </div>
-            <h3 class="text-2xl font-bold text-pink-200 mb-2">Catcher de Beijinhos & Carinho 💖</h3>
-            <p class="text-sm text-gray-300 mb-6">Clique nos corações que aparecem na tela para coletar sorrisos e beijinhos virtuais para você relaxar!</p>
+            <h3 class="text-2xl font-bold text-pink-200 mb-2">Colete os Corações 💖</h3>
+            <p class="text-sm text-gray-300 mb-6">Clique nos corações que vão voando para coletar todo o meu amor por você!</p>
 
-            <!-- Placar do Jogo -->
+            <!-- Placar -->
             <div class="flex items-center justify-center gap-6 mb-4 bg-black/60 p-4 rounded-2xl border border-pink-500/20">
                 <div class="text-center">
                     <span class="block text-xs text-gray-400 uppercase tracking-widest">Coletados</span>
@@ -255,16 +251,16 @@
             <!-- Área do Jogo -->
             <div id="game-arena" class="relative w-full h-72 sm:h-80 bg-black/80 border-2 border-dashed border-romanticPink/40 rounded-2xl overflow-hidden cursor-crosshair flex items-center justify-center">
                 <div id="game-start-prompt" class="absolute inset-0 flex flex-col items-center justify-center bg-black/70 backdrop-blur-xs z-20">
-                    <button onclick="startMiniGame()" class="bg-gradient-to-r from-romanticPink to-pink-700 hover:from-pink-600 hover:to-pink-800 text-white font-bold py-3 px-6 rounded-xl romantic-glow transition-all transform hover:scale-105 shadow-lg cursor-pointer">
+                    <button onclick="startMiniGame()" class="bg-romanticPink hover:bg-pink-600 text-white font-bold py-3 px-6 rounded-xl romantic-glow transition-all transform hover:scale-105 shadow-lg cursor-pointer">
                         Iniciar Jogo 🎮
                     </button>
-                    <span class="text-xs text-gray-400 mt-2">Clique nos corações antes que sumam!</span>
+                    <span class="text-xs text-gray-400 mt-2">Clique nos corações voando antes que sumam!</span>
                 </div>
             </div>
 
-            <!-- Mensagem de Vitória do Jogo -->
+            <!-- Mensagem ao Ganhar -->
             <div id="game-win-msg" class="hidden mt-4 p-4 bg-pink-950/40 border border-romanticPink rounded-2xl text-pink-200 text-sm animate-pulse">
-                🎉 Oba! Você ganhou infinitos beijinhos e abraços meus hoje! Espero que seu coraçãozinho esteja mais leve. Te amo! ❤️
+                🎉 Parabéns amor! Você ganhou infinitos beijinhos e abraços meus! Espero que seu coraçãozinho esteja mais leve hoje. Te amo! ❤️
             </div>
 
             <div class="mt-6">
@@ -275,9 +271,9 @@
         </div>
     </section>
 
-    <!-- SCRIPTS DA APLICAÇÃO -->
+    <!-- SCRIPTS -->
     <script>
-        // --- 1. CAPA: CORAÇÕES CAINDO ---
+        // --- 1. GERAR CORAÇÕES CAINDO NO FUNDO DO SITE ---
         function createCoverHeart() {
             const container = document.getElementById('hearts-container');
             if (!container) return;
@@ -295,23 +291,7 @@
         }
         setInterval(createCoverHeart, 300);
 
-        // --- EFEITO MÁQUINA DE ESCREVER ---
-        const coverText = "oiii amor, sei que você anda triste e cansada, então fiz isso para você";
-        let charIndex = 0;
-        function typeWriter() {
-            const target = document.getElementById('typing-text');
-            if (charIndex < coverText.length) {
-                target.innerHTML += coverText.charAt(charIndex);
-                charIndex++;
-                setTimeout(typeWriter, 55);
-            }
-        }
-        window.addEventListener('DOMContentLoaded', () => {
-            typeWriter();
-            calculateRelationshipTime();
-        });
-
-        // --- 2. CÁLCULO DE TEMPO DE RELACIONAMENTO ---
+        // --- CÁLCULO DE TEMPO AUTOMÁTICO ---
         function calculateRelationshipTime() {
             const startDate = new Date(2026, 2, 16); // 16 de Março de 2026
             const today = new Date();
@@ -333,11 +313,18 @@
 
             const totalMonths = (years * 12) + months;
 
-            document.getElementById('months-count').innerText = totalMonths;
-            document.getElementById('days-count').innerText = days;
+            // Atualiza caso a data seja calculada ou fixa os valores desejados
+            if (totalMonths >= 0) {
+                document.getElementById('months-count').innerText = totalMonths;
+                document.getElementById('days-count').innerText = days;
+            }
         }
 
-        // --- TRANSIÇÕES DE TELA ---
+        window.addEventListener('DOMContentLoaded', () => {
+            calculateRelationshipTime();
+        });
+
+        // --- TRANSIÇÃO ENTRE ETAPAS ---
         function goToStage2() {
             const cover = document.getElementById('screen-cover');
             const countdown = document.getElementById('screen-countdown');
@@ -366,5 +353,149 @@
             }, 500);
         }
 
-        // --- PLAYER DE MÚSICA SPOTIFY ---
-        function toggle
+        function goToStage4() {
+            const letter = document.getElementById('screen-letter');
+            const game = document.getElementById('screen-game');
+
+            letter.classList.add('opacity-0', '-translate-y-10');
+            setTimeout(() => {
+                letter.classList.add('hidden');
+                game.classList.remove('hidden');
+                setTimeout(() => {
+                    game.classList.remove('opacity-0');
+                }, 50);
+            }, 500);
+        }
+
+        // --- REVELAR MÚSICA DO SPOTIFY ---
+        function toggleMusic() {
+            const container = document.getElementById('music-container');
+            const btn = document.getElementById('btn-reveal-music');
+            if (container.classList.contains('hidden')) {
+                container.classList.remove('hidden');
+                btn.innerHTML = '<i class="fa-solid fa-pause text-romanticPink"></i> Ocultar Música';
+            } else {
+                container.classList.add('hidden');
+                btn.innerHTML = '<i class="fa-solid fa-play text-romanticPink"></i> Revelar a Música ("Meu Abrigo" - Melim)';
+            }
+        }
+
+        // --- ABRIR CARTA COM CORAÇÕES FLUTUANDO ---
+        function openLetter() {
+            const closed = document.getElementById('envelope-closed');
+            const open = document.getElementById('envelope-open');
+
+            closed.classList.add('hidden');
+            open.classList.remove('hidden');
+            setTimeout(() => {
+                open.classList.remove('opacity-0');
+            }, 50);
+
+            for (let i = 0; i < 25; i++) {
+                createFloatingHeart();
+            }
+        }
+
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '<i class="fa-solid fa-heart text-romanticPink"></i>';
+            heart.style.position = 'fixed';
+            heart.style.left = (window.innerWidth / 2 + (Math.random() * 300 - 150)) + 'px';
+            heart.style.top = (window.innerHeight / 2 + (Math.random() * 100 - 50)) + 'px';
+            heart.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+            heart.style.zIndex = '999';
+            heart.style.transition = 'all 1.5s ease-out';
+            heart.style.pointerEvents = 'none';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.style.transform = `translate(${(Math.random() * 400 - 200)}px, -${Math.random() * 300 + 100}px) scale(${Math.random() + 0.5})`;
+                heart.style.opacity = '0';
+            }, 50);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 1600);
+        }
+
+        // --- MINI-GAME DOS CORAÇÕES VOANDO ---
+        let gameScore = 0;
+        let gameInterval = null;
+        const targetScore = 10;
+
+        function startMiniGame() {
+            document.getElementById('game-start-prompt').classList.add('hidden');
+            gameScore = 0;
+            document.getElementById('score-val').innerText = gameScore;
+            document.getElementById('game-win-msg').classList.add('hidden');
+
+            if (gameInterval) clearInterval(gameInterval);
+
+            gameInterval = setInterval(spawnGameItem, 800);
+        }
+
+        function spawnGameItem() {
+            const arena = document.getElementById('game-arena');
+            if (!arena || document.getElementById('game-start-prompt').classList.contains('hidden') === false) return;
+
+            const item = document.createElement('div');
+            item.innerHTML = '<i class="fa-solid fa-heart text-romanticPink"></i>';
+            item.style.position = 'absolute';
+            item.style.fontSize = '2rem';
+            item.style.cursor = 'pointer';
+            item.style.userSelect = 'none';
+            item.style.transition = 'all 1.5s linear';
+
+            const maxX = arena.clientWidth - 50;
+            const maxY = arena.clientHeight - 50;
+            const startX = Math.max(10, Math.floor(Math.random() * maxX));
+            const startY = maxY;
+
+            item.style.left = startX + 'px';
+            item.style.top = startY + 'px';
+
+            item.addEventListener('click', () => {
+                gameScore++;
+                document.getElementById('score-val').innerText = gameScore;
+                item.style.transform = 'scale(1.8)';
+                item.style.opacity = '0';
+                setTimeout(() => item.remove(), 150);
+
+                if (gameScore >= targetScore) {
+                    clearInterval(gameInterval);
+                    document.getElementById('game-win-msg').classList.remove('hidden');
+                }
+            });
+
+            arena.appendChild(item);
+
+            // Animação de subir (voar)
+            setTimeout(() => {
+                item.style.top = '-50px';
+            }, 50);
+
+            // Remover item quando sair da tela
+            setTimeout(() => {
+                if (item.parentElement) {
+                    item.remove();
+                }
+            }, 1600);
+        }
+
+        function resetGame() {
+            if (gameInterval) clearInterval(gameInterval);
+            document.getElementById('game-start-prompt').classList.remove('hidden');
+            document.getElementById('game-win-msg').classList.add('hidden');
+            gameScore = 0;
+            document.getElementById('score-val').innerText = gameScore;
+            const arena = document.getElementById('game-arena');
+            const hearts = arena.querySelectorAll('.fa-heart');
+            hearts.forEach(h => {
+                if(h.parentElement !== document.getElementById('game-start-prompt')) {
+                    h.parentElement.remove();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
